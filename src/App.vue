@@ -10,13 +10,25 @@ const body = computed(() => {
     return_to: mmsJson.url,
   };
 });
+const onClick = async () => {
+  const res = await fetch("https://emoldinosupport.zendesk.com/access/jwt", {
+    method: "POST",
+    body: JSON.stringify(body.value),
+    headers: {
+      Accept: "*/*",
+      "Allow-Control-Allow-Origin": "*",
+    },
+  });
+  const data = await res.json();
+  console.log(data);
+};
 </script>
 
 <template>
   <input v-model="mmsJsonRaw" />
-  <p style="max-width: 80vw; overflow: auto;">jwt: {{ body?.jwt }}</p>
+  <p style="max-width: 80vw; overflow: auto">jwt: {{ body?.jwt }}</p>
   <p>return_to: {{ body?.return_to }}</p>
-  <button @click="">Click to move to emoldino zendesk</button>
+  <button @click="onClick">Click to move to emoldino zendesk</button>
 </template>
 
 <style scoped></style>
